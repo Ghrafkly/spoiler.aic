@@ -80,7 +80,6 @@ async def on_message(message):
                 await message.channel.send(embed=embedMsg)
                 if a:
                     await message.channel.send(embed=embedMsg2)
-
     elif message.content.startswith('!stats'):
         author, category = stats('authors'), stats('category')
         embedMsg = discord.Embed(title = "Discovering SCP stats", description = "These are the stats for DSCP Podcast", color = 0x109319)
