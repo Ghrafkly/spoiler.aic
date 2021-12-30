@@ -3,28 +3,20 @@ import os
 import csv
 import json
 from keep_alive import keep_alive
-from dotenv import load_dotenv
+from dotenv import load_dotenv # Not needed for repl.it
 load_dotenv()
 
 def spoiler(scp):
     with open('SCPspoiler.csv', 'r', encoding='utf-8') as f:
         r = csv.reader(f)
-        for row in r:
-            if row == [scp]:
-                return True
-    return False
+        return next((row for row in r if row == [scp]), False)
 
-def stats(s):
+def stats(s, n):
     with open('stats.json', 'r', encoding='utf-8') as f:
         data = json.load(f)
         cat = data[s]
         rs = []
-        if s == 'authors' or s == '001':
-            for i in range(len(cat)):
-                rs.append([cat[i]['author'], cat[i]['number']])
-        else:
-            for i in range(len(cat)):
-                rs.append([cat[i]['type'], cat[i]['number']])
+        [rs.append([cat[i][n], cat[i]['number']]) for i in range(len(cat))]
     return rs
 
 def setField(field, a):
@@ -46,7 +38,7 @@ async def on_message(message):
 
     if message.content.startswith('!spoiler'):
         if message.content == "!spoiler":
-          await message.channel.send('Please include an SCP number `!spoiler 173`')
+            await message.channel.send('Please include an SCP number `!spoiler 173`')
         else:
             scp = [x.strip(',') for x in message.content.split()][1:]
             if len(scp) > 5:
@@ -59,7 +51,7 @@ async def on_message(message):
                     if scp[i].isnumeric():
                         if scp[i] == '001':
                             a = True
-                            one = stats('001')
+                            one = stats('001', 'author')
                             embedMsg2 = discord.Embed(title = "001 Proposals", description = "The 001 proposals that have been read on the podcast are", color = 0x109319)
                             for i in range(len(one)):
                                 embedMsg2.add_field(name = one[i][0], value = one[i][1])
@@ -70,18 +62,16 @@ async def on_message(message):
                             nrd += (f'{scp[i]}, ')
                     else:
                         nv += (f'{scp[i]}, ')
-                if rd:
-                    embedMsg.add_field(name = 'No spoiler tag needed', value = rd[:len(rd)-2], inline = False)
-                if nrd:
-                    embedMsg.add_field(name = 'Spoiler tag needed*', value = nrd[:len(nrd)-2], inline = False)
-                if nv:
-                    embedMsg.add_field(name = 'Not valid. Please enter an SCP number^', value = nv[:len(nv)-2], inline = False)
+                msg = lambda a, b: embedMsg.add_field(name = b, value = a[:len(a)-2], inline = False) if a else None
+                msg(rd, 'No spoiler tag needed')
+                msg(nrd, 'Spoiler tag needed*')
+                msg(nv, 'Not valid. Please enter an SCP number^')
                 embedMsg.set_footer(text = '^Tales aren\'t currently supported by the bot.\n*To spoiler tag \|\|Spoiler text here\|\|\nFeel free to ping @Very Funny for any queries')
                 await message.channel.send(embed=embedMsg)
                 if a:
                     await message.channel.send(embed=embedMsg2)
     elif message.content.startswith('!stats'):
-        author, category = stats('authors'), stats('category')
+        author, category = stats('authors', 'author'), stats('category', 'type')
         embedMsg = discord.Embed(title = "Discovering SCP stats", description = "These are the stats for DSCP Podcast", color = 0x109319)
         embedMsg.add_field(name = 'Episodes',value = '94\n**No. SCPs/Tales***\n255\n**Total Runtime**\n119h48m')
         embedMsg.add_field(name = 'Most read Author*', value = setField(author, 0))
