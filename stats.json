@@ -1,0 +1,76 @@
+{
+    "authors": [
+        {
+            "author": "Tanhony",
+            "number": 19
+        },
+        {
+            "author": "djKaktus",
+            "number": 19
+        },
+        {
+            "author": "SalmonCorbette",
+            "number": 12
+        },
+        {
+            "author": "PeppersGhost",
+            "number": 9
+        },
+        {
+            "author": "TheGreatHippo",
+            "number": 9
+        }
+    ],
+    "category": [
+        {
+            "type": "Series 1",
+            "number": 47
+        },
+        {
+            "type": "Series 2",
+            "number": 42
+        },
+        {
+            "type": "Series 3",
+            "number": 41
+        },
+        {
+            "type": "Series 4",
+            "number": 29
+        },
+        {
+            "type": "Series 5",
+            "number": 19
+        }
+    ],
+    "001": [
+        {
+            "author": "Dr Gear's Proposal",
+            "number": "The Prototype"
+        },
+        {
+            "author": "Dr Clef's Proposal",
+            "number": "Gate Guardian"
+        },
+        {
+            "author": "Scantron's Proposal",
+            "number": "The Foundation"
+        },
+        {
+            "author": "TwistedGears/kaktus Proposal",
+            "number": "Broken God"
+        },
+        {
+            "author": "Dr. Bright's Proposal",
+            "number": "The Factory"
+        },
+        {
+            "author": "S D Locke's Proposal",
+            "number": "When Day Breaks"
+        },
+        {
+            "author": "Spikebrennan's Proposal",
+            "number": "God's Blindspot"
+        }        
+    ]
+}
